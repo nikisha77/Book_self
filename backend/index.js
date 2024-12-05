@@ -51,7 +51,27 @@ app.get('/books/:id', async(req , res)=>{
     }
 })
 
+app.put('/books/:id' , async (req , res)=>{
+    try {
+        const {title , author , publishYear} = req.body ; 
+        if (!title || !author || !publishYear)
+        {
+            return res.status(400).json({message : "Please provide all the fields"})
+        }
+        const id = req.params.id ; 
+        const updated_book = await Book.findByIdAndUpdate(id , req.body )
 
+        if (!updated_book)
+        {
+            return res.status(404).json({message : "Given ID does not exist"})
+        }
+        return res.status(200).json(updated_book)
+    }
+    catch(err)
+    {
+        return res.status(500).json({message : err.message})
+    }
+})
 
 
 mongoose.connect(mongo_db_url)
