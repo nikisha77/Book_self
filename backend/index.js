@@ -39,6 +39,20 @@ app.get('/books' , async (req , res)=> {
     }
 })
 
+app.get('/books/:id', async(req , res)=>{
+    try {
+        const id = req.params.id;
+        const req_book = await book.findById(id)
+        return res.status(200).json(req_book)
+    }
+    catch(err)
+    {
+        return res.status(404).send("Given ID does not exist !!")
+    }
+})
+
+
+
 
 mongoose.connect(mongo_db_url)
     .then(() => {
