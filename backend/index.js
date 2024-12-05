@@ -1,14 +1,16 @@
 import express from "express";
+import mongoose from "mongoose";
+import mongo_db_url from "./mongo_db_config.js";
 
-const PORT = 3000
+
+const PORT = 5555
 const app = express()
 
-app.get('/',(req , res)=>{
-    console.log(req)
-
-    return res.status(234).send("this page has been update")
+mongoose.connect(mongo_db_url)
+.then(()=>{
+    console.log("Connected to MongoDB")
+    console.log("the web is functional on port ",PORT)
 })
-
-app.listen(PORT , ()=>{
-    console.log(`Server is running on port ${PORT}`)
-})
+.catch((err)=>{
+    console.log(err)
+    })
