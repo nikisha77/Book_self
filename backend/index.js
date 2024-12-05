@@ -24,6 +24,21 @@ app.post("/books", async (req, res) => {
     }
 });
 
+app.get('/books' , async (req , res)=> {
+    try {
+        const books  = await Book.find({});
+        return res.status(200).json({
+            total_books : books.length , 
+            data : books
+        })
+    }
+    catch(err)
+    {
+        res.status(500).send("Cannot view books now !! ", err)
+
+    }
+})
+
 
 mongoose.connect(mongo_db_url)
     .then(() => {
